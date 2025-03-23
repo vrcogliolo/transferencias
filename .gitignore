@@ -1,0 +1,6 @@
+# Generacion automatica
+bin/
+obj/
+
+# Entorno
+.vscode/
