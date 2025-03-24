@@ -1,6 +1,6 @@
 @Transferencias_HostAddress = http://localhost:5045
 
-GET {{Transferencias_HostAddress}}/weatherforecast/
+GET {{Transferencias_HostAddress}}
 Accept: application/json
 
 ###
