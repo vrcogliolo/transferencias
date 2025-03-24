@@ -52,6 +52,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    var application = app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+    var pendingMigrations = await application.Database.GetPendingMigrationsAsync();
+    if (pendingMigrations != null)
+        await application.Database.MigrateAsync();
 }
 
 if (app.Environment.IsProduction())
