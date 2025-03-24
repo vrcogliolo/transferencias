@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+    depends_on:
+      - db
+    env_file:
+      - .env
+    container_name: transferencias
+    ports:
+      - "${BACKEND_PORT}:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+
+  db:
+    image: postgres:16
+    container_name: transferenciasdb
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - TZ=America/Asuncion
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - db:/var/lib/postgresql/data
+
+volumes:
+  db:

@@ -10,6 +10,16 @@ https://dotnet.microsoft.com/es-es/download
 dotnet tool install --global dotnet-ef
 ```
 
+## Instalar dependencias
+```console
+dotnet restore
+```
+
+## Aplicar Migraciones
+```console
+dotnet ef database update
+```
+
 ## Ejecutar el proyecto
 
 ```console

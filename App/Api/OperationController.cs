@@ -3,32 +3,47 @@ using Microsoft.EntityFrameworkCore;
 using Transferencias.App.Data;
 using Transferencias.App.Models;
 using Transferencias.App.DTO;
+using Microsoft.Extensions.Logging;
 
 [Route("api/operation")]
 [ApiController]
 public class OperationController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
+    private readonly ILogger<OperationController> _logger;
 
-    public OperationController(ApplicationDbContext context)
+    public OperationController(ApplicationDbContext context, ILogger<OperationController> logger)
     {
         _context = context;
+        _logger = logger;
     }
 
     [HttpPost]
     public async Task<IActionResult> MakeTransfer(int origin, int target, int amount)
     {
+        _logger.LogInformation("MakeTransfer received at {time}", DateTime.UtcNow);
         var cuentaOrigen = await _context.Account.FindAsync(origin);
         var cuentaDestino = await _context.Account.FindAsync(target);
 
-        if (amount < 0)
+        if (amount < 0){
+            _logger.LogInformation("Monto invalido [origin: {origin}, origin: {target}, origin: {amount}] at {time}", origin, target, amount, DateTime.UtcNow);
             return NotFound(new { mensaje = "Monto invalido" });
-        
-        if (cuentaOrigen == null || cuentaDestino == null)
-            return NotFound(new { mensaje = "Cuenta origen o destino no encontrada" });
+        }
 
-        if (cuentaOrigen.Balance < amount)
+        if (cuentaOrigen == null || cuentaDestino == null){
+            _logger.LogInformation("Cuenta origen o destino no encontrada [origin: {origin}, origin: {target}, origin: {amount}] at {time}", origin, target, amount, DateTime.UtcNow);
+            return NotFound(new { mensaje = "Cuenta origen o destino no encontrada" });
+        }
+
+        if (cuentaOrigen == cuentaDestino){
+            _logger.LogInformation("Cuenta origen y destino no pueden coincidir [origin: {origin}, origin: {target}, origin: {amount}] at {time}", origin, target, amount, DateTime.UtcNow);
+            return NotFound(new { mensaje = "Cuenta origen y destino no pueden coincidir" });
+        }
+
+        if (cuentaOrigen.Balance < amount){
+            _logger.LogInformation("Saldo insuficiente [origin: {origin}, origin: {target}, origin: {amount}] at {time}", origin, target, amount, DateTime.UtcNow);
             return BadRequest(new { mensaje = "Saldo insuficiente" });
+        }
 
         cuentaOrigen.Balance -= amount;
         cuentaDestino.Balance += amount;

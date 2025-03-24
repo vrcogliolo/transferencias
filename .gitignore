@@ -1,6 +1,11 @@
 # Generacion automatica
 bin/
 obj/
+publish/
+logs/
+
+# env
+.env
 
 # Entorno
 .vscode/

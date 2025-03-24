@@ -1,0 +1,91 @@
+{
+	"info": {
+		"_postman_id": "f1b3d1ce-1a61-4337-a378-69364436b25e",
+		"name": "continental",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20082039"
+	},
+	"item": [
+		{
+			"name": "getAccount",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/account/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"account",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getOperation",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/operation/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"operation",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postOperation",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5045/api/operation?origin=1&target=2&amount=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5045",
+					"path": [
+						"api",
+						"operation"
+					],
+					"query": [
+						{
+							"key": "origin",
+							"value": "1"
+						},
+						{
+							"key": "target",
+							"value": "2"
+						},
+						{
+							"key": "amount",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
